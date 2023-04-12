@@ -4,6 +4,6 @@
  */
 
 /*!
- * ZNX.PW 3.0.0-alpha-7 by ZANXEY | 2023
+ * ZNX.PW v3 by ZANXEY | 2023
  * License - GPL-3.0+
  */
