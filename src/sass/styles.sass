@@ -1,0 +1,328 @@
+@use 'sass:math'
+@use 'sass:color'
+
+$spacing: 4px
+$s-1\2: $spacing * .5
+$s-1: $spacing
+$s-2: $spacing * 2
+$s-3: $spacing * 3
+$s-4: $spacing * 4
+$s-6: $spacing * 6
+$s-8: $spacing * 8
+$s-9: $spacing * 9
+$s-10: $spacing * 10
+$s-12: $spacing * 12
+$s-16: $spacing * 16
+$s-23: $spacing * 23
+
+$primary: #aa8c32
+$secondary: #c8aa55
+
+$background: #1a1515
+$on-background: #f0e6be
+
+$primary-container: #5a5139
+$on-primary-container: #f0e6be
+
+$surface: #2a2525
+$on-surface: #f0e6be
+
+$surface-container: #3c3535
+$on-surface-container: #f0e6be
+
+$font-family: 'Poppins', sans-serif
+$border-radius: $s-4
+$transition-duration: 300ms
+$easing-base: ease-out
+$easing-spring: cubic-bezier(.34, 1.56, .64, 1)
+
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+html
+    overflow: hidden
+
+body
+    background-color: $background
+    color: $on-background
+    font-family: $font-family
+    font-size: $s-4
+    line-height: 1.6
+
+nav
+    position: fixed
+    left: $s-4
+    top: 50%
+    transform: translateY(-50%)
+    display: flex
+    flex-direction: column
+    gap: $s-4
+    background-color: $surface
+    padding: $s-3
+    border-radius: 999px
+    box-shadow: 0 $s-1\2 $s-1 rgba(0, 0, 0, .2)
+    z-index: 1000
+
+    .nav-track
+        position: absolute
+        background-color: $primary
+        top: $s-3
+        left: $s-3
+        width: $s-9
+        height: $s-9
+        border-radius: 50%
+        transition: all 400ms $easing-spring
+        z-index: 0
+
+    a
+        opacity: .5
+        color: $on-surface
+        text-decoration: none
+        width: $s-9
+        height: $s-9
+        display: flex
+        align-items: center
+        justify-content: center
+        border-radius: 50%
+        transition: opacity $transition-duration $easing-base, color $transition-duration $easing-base
+        z-index: 1
+
+        &:hover
+            opacity: 1
+
+        &.active
+            opacity: 1
+            color: $background
+
+        i
+            font-size: 1.5rem
+
+main
+    width: 100vw
+    height: 100vh
+    position: relative
+
+    section
+        width: 100vw
+        height: 100vh
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        align-items: center
+        padding: $s-23 $s-10
+        gap: $s-4
+        position: absolute
+        inset: 0
+        overflow-y: auto
+        opacity: 0
+        pointer-events: none
+        transition: opacity 300ms ease-in-out
+
+        &.active
+            opacity: 1
+            pointer-events: auto
+            z-index: 1
+
+        &#home
+            justify-content: center
+
+            #logo
+                width: 500px
+                max-width: 100%
+                fill: $on-background
+
+                @keyframes drop-in
+                    0%
+                        opacity: 0
+                        transform: translateY(-100%)
+                    60%
+                        opacity: 1
+                        transform: translateY(10%)
+                    80%
+                        transform: translateY(-5%)
+                    100%
+                        opacity: 1
+                        transform: translateY(0)
+
+                path
+                    opacity: 0
+                    transform-origin: 50% 50%
+                    animation: drop-in .8s $easing-spring forwards
+
+                    @for $i from 1 through 6
+                        &:nth-child(#{$i})
+                            animation-delay: $i * .1s
+
+            #socials
+                display: flex
+                justify-content: center
+                align-items: center
+                flex-wrap: wrap
+                position: relative
+
+                @keyframes cover-expand
+                    0%
+                        width: 0
+                        height: 0
+                        opacity: 0
+                    75%
+                        width: 100%
+                        height: 100%
+                        opacity: 1
+                    100%
+                        width: 0
+                        height: 0
+
+                @keyframes fade-in
+                    to
+                        opacity: 1
+                        pointer-events: auto
+
+                &:after
+                    content: ''
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%, -50%)
+                    width: 0
+                    height: 0
+                    background-color: $primary
+                    border-radius: 999px
+                    animation: cover-expand 1.4s $easing-spring forwards
+                    z-index: 100
+
+                a
+                    position: relative
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    width: $s-16
+                    height: $s-12
+                    text-decoration: none
+                    z-index: 2
+                    opacity: 0
+                    animation: fade-in 0s forwards
+                    animation-delay: 1s
+                    pointer-events: none
+
+                    svg
+                        width: $s-6
+                        height: $s-6
+                        fill: $on-background
+                        flex-shrink: 0
+
+                #handle-tooltip
+                    position: absolute
+                    height: $s-12
+                    width: 0
+                    background-color: $primary
+                    border-radius: 999px
+                    transition: all $transition-duration $easing-spring
+                    z-index: 1
+                    pointer-events: none
+                    color: $on-background
+                    font-weight: 700
+                    white-space: nowrap
+                    line-height: $s-12
+                    opacity: 0
+
+        h2
+            font-size: 3rem
+            margin-bottom: $s-8
+            color: $on-background
+
+        .card-container
+            display: flex
+            flex-wrap: wrap
+            justify-content: center
+            gap: $s-4
+            width: 100%
+            max-width: 1000px
+
+        .card
+            background-color: $surface-container
+            color: $on-surface-container
+            padding: $s-8
+            border-radius: $border-radius
+            box-shadow: 0 $s-1 $s-2 rgba(0, 0, 0, .2)
+            text-align: center
+            flex: 1
+            min-width: 300px
+            transition: outline-color $transition-duration $easing-base, box-shadow $transition-duration $easing-base
+            display: flex
+            flex-direction: column
+            align-items: center
+            gap: $s-2
+            outline: solid transparent $s-1\2
+
+            &:hover
+                outline-color: $secondary
+                box-shadow: 0 $s-2 $s-4 rgba(0, 0, 0, .2)
+
+            i
+                font-size: 2.5rem
+                margin-bottom: $s-2
+                color: $secondary
+
+            h3
+                font-size: 1.5rem
+                font-weight: 700
+
+            p
+                margin-bottom: $s-4
+                max-width: 250px
+
+            a
+                color: $on-surface-container
+                text-decoration: none
+                font-weight: 700
+                transition: color $transition-duration $easing-base
+
+                &:hover
+                    color: $secondary
+
+            pre
+                text-align: left
+                white-space: pre-wrap
+                word-break: break-all
+                background-color: $primary-container
+                color: $on-primary-container
+                padding: $s-4
+                border-radius: $border-radius * .5
+                margin-bottom: $s-4
+                font-size: .8rem
+                width: 100%
+
+            button
+                background-color: $secondary
+                color: $background
+                border: none
+                padding: $s-3 $s-6
+                border-radius: 999px
+                font-weight: 700
+                cursor: pointer
+                transition: background-color $transition-duration $easing-base
+                display: inline-flex
+                align-items: center
+                gap: $s-2
+
+                &:hover
+                    background-color: color.scale($secondary, $lightness: -30%)
+
+                i
+                    font-size: 1.2rem
+                    margin: 0
+                    color: $background
+
+@media (max-width: 768px)
+    nav
+        left: 50%
+        top: auto
+        bottom: $s-4
+        transform: translateX(-50%)
+        flex-direction: row
+
+    main section h2
+        font-size: 2.5rem

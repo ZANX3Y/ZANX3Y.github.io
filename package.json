@@ -1,0 +1,20 @@
+{
+  "name": "zanxey",
+  "version": "4.0.0",
+  "scripts": {
+    "build": "npm run clean && npm run copy:all && npm run sass",
+    "sass": "sass src/sass:dist/assets/css --no-source-map --style=compressed",
+    "copy:all": "cp src/*.html dist/ && cp -r src/assets dist/assets",
+    "clean": "rm -rf dist && mkdir dist",
+    "dev": "npm run build && concurrently \"npm run sass:watch\" \"npm run copy:watch\" \"npm run serve\"",
+    "sass:watch": "sass --watch src/sass:dist/assets/css --no-source-map",
+    "copy:watch": "chokidar 'src/**/*.{html,js,png,jpg,jpeg,svg,ico}' -i 'dist/**' -c \"node scripts/copy-changed.js {path}\"",
+    "serve": "live-server dist"
+  },
+  "devDependencies": {
+    "sass": "^1.90.0",
+    "live-server": "^1.2.2",
+    "concurrently": "^9.2.0",
+    "chokidar-cli": "^3.0.0"
+  }
+}
