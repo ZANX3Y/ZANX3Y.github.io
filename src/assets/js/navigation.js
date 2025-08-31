@@ -1,6 +1,6 @@
 const navLinks = document.querySelectorAll('nav a')
 const sections = document.querySelectorAll('main section')
-const navTrack = document.querySelector('nav .nav-track')
+const navTrack = document.getElementById('nav-track')
 
 function moveTrack(targetLink, initial = false) {
     if (!navTrack || !targetLink) return

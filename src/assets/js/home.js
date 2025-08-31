@@ -1,4 +1,4 @@
-const socials = document.querySelector('#socials')
+const socials = document.getElementById('socials')
 const tooltip = socials.querySelector('#handle-tooltip')
 const tooltipText = tooltip.querySelector('span')
 const links = socials.querySelectorAll('a')
