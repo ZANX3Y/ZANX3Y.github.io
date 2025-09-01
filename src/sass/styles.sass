@@ -10,12 +10,37 @@
 html
     overflow: hidden
 
+@keyframes bg-move
+    0%
+        transform: translate(0, 0)
+    100%
+        transform: translate(-40px, -40px)
+
 body
     background-color: $background
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="1.5" fill="%23aa8c32" opacity="0.15"/><circle cx="10" cy="10" r="1.5" fill="%23aa8c32" opacity="0.15"/><circle cx="30" cy="30" r="1.5" fill="%23aa8c32" opacity="0.15"/></svg>')
+    background-size: 20px 20px
+    background-repeat: repeat
     color: $on-background
     font-family: $font-family
     font-size: $s-4
     line-height: 1.6
+    position: relative
+
+    &::before
+        content: ''
+        position: fixed
+        top: 0
+        left: 0
+        width: 200vw
+        height: 200vh
+        pointer-events: none
+        z-index: 0
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="1.5" fill="%23aa8c32" opacity="0.08"/><circle cx="10" cy="10" r="1.5" fill="%23aa8c32" opacity="0.08"/><circle cx="30" cy="30" r="1.5" fill="%23aa8c32" opacity="0.08"/></svg>')
+        background-size: 40px 40px
+        background-repeat: repeat
+        opacity: 0.7
+        animation: bg-move 12s linear infinite
 
 nav
     position: fixed
