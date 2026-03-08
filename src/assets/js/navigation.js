@@ -13,8 +13,9 @@ function moveTrack(targetLink, initial = false) {
 }
 
 function updateActive(targetLink, initial = false) {
-    const targetId = targetLink.getAttribute('href').substring(1)
-    const targetSection = document.getElementById(targetId)
+    if (!targetLink) return
+    const targetId = targetLink.getAttribute('href')?.substring(1)
+    const targetSection = targetId ? document.getElementById(targetId) : null
 
     targetLink.style.transition = initial ? 'none' : ''
 
@@ -27,6 +28,15 @@ function updateActive(targetLink, initial = false) {
     moveTrack(targetLink, initial)
 }
 
+function syncFromHash(initial = false) {
+    const hash = window.location.hash
+    const linkFromHash = hash ? document.querySelector(`nav a[href="${hash}"]`) : null
+    updateActive(linkFromHash ?? navLinks[0], initial)
+}
+
+window.addEventListener('hashchange', () => syncFromHash())
+window.addEventListener('popstate', () => syncFromHash())
+
 window.addEventListener('resize', () => {
     moveTrack(document.querySelector('nav a.active'), true)
 })
@@ -35,6 +45,4 @@ navLinks.forEach(link =>
     link.addEventListener('click', () => updateActive(link))
 )
 
-const hash = window.location.hash
-const initialLink = hash ? document.querySelector(`nav a[href="${hash}"]`) : null
-updateActive(initialLink ?? navLinks[0], true)
+syncFromHash(true)
